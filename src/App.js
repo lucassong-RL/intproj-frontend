@@ -1,18 +1,33 @@
 import React, {useEffect, useState} from "react";
 import { Link, useHistory} from "react-router-dom";
-import { Nav, Navbar, NavItem } from "react-bootstrap";
+import { FormControl, FormGroup, Form, Button, Nav, Navbar, NavItem } from "react-bootstrap";
 import "./App.css";
 import Routes from './Routes';
 import { LinkContainer } from "react-router-bootstrap";
 import { AppContext } from "./libs/contextLib";
 import { Auth } from "aws-amplify";
 import { onError } from "./libs/errorLib";
+import styled from 'styled-components';
 
 export default function App() {
   const history = useHistory();
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
-  async function handleLogout() {
+  const [gameId, setId] = useState("");
+  const [startGame, setGameStart] = useState(false) // players have all joined, start game 
+  const [nickname, setNickname] = useState('')
+
+  function makeid(length) {
+     var result           = '';
+     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+     var charactersLength = characters.length;
+     for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+     }
+     return result;
+  }
+
+async function handleLogout() {
     await Auth.signOut();
     userHasAuthenticated(false);
     history.push("/login");
@@ -36,43 +51,49 @@ export default function App() {
     setIsAuthenticating(false);
   }
 
-return (
-  !isAuthenticating && (
+  return (!gameId ? (
     <div className="App container">
-      <Navbar fluid collapseOnSelect>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <Link to="/">Scratch</Link>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav pullRight>
-            {isAuthenticated ? (
-              <>
-                <LinkContainer to="/settings">
-                  <NavItem>Settings</NavItem>
-                </LinkContainer>
-                <NavItem onClick={handleLogout}>Logout</NavItem>
-              </>
-            ) : (
-              <>
-                <LinkContainer to="/signup">
-                  <NavItem>Signup</NavItem>
-                </LinkContainer>
-                <LinkContainer to="/login">
-                  <NavItem>Login</NavItem>
-                </LinkContainer>
-              </>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-      <AppContext.Provider
-        value={{ isAuthenticated, userHasAuthenticated }}
-      >
-        <Routes />
-      </AppContext.Provider>
-    </div>
+        <LobbyWrapper>
+          <h1> personal trivia </h1> {nickname && 
+            <h2> welcome {nickname} </h2>
+          }
+        <NickNameWrapper>
+          <FormControl size="lg" type="text" placeholder="nickname" onChange={e => setNickname(e.target.value)}/>
+        </NickNameWrapper>
+         <NewGameWrapper>
+            start new game 
+            <div>
+              <Button onClick={() => setId(makeid(5))}>start new game </Button>
+            </div>
+         </NewGameWrapper>
+          <JoinGameWrapper>
+             join game
+          <FormControl size="lg" type="text" placeholder="room code"/>
+          </JoinGameWrapper>
+        </LobbyWrapper>
+    </div> 
   )
-);}
+ : (
+   <>
+    your room id is {gameId}
+   <Button onClick={()=>setGameStart(true)}> lets go </Button>
+   </>
+ ));
+}
+
+const LobbyWrapper = styled.div`
+    margin: auto;
+    width: 60vw;
+`
+
+const NewGameWrapper = styled.div`
+    margin: 15px;
+`
+
+const NickNameWrapper = styled.div`
+    margin: 15px;
+`
+
+const JoinGameWrapper = styled.div`
+    margin: 15px;
+`
