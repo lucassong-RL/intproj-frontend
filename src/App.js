@@ -33,6 +33,9 @@ export default function App() {
     if (nickname !== "") {
       setId(makeid(5))
       setGenerateGame(true)
+      // need to push nickname, connect to real-time and store connection id in state
+      // also need to initialize roundid in connectionid
+      // ** how are we going to show the other players that have joined the lobby? **
     }
     else {
         alert("Please enter a nickname")
@@ -42,11 +45,26 @@ export default function App() {
   function handleJoinGame() {
     if (nickname !== "") {
         setGameStart(true)
+      // need to push nickname, connect to real-time and store connection id in state
+      // need to store roundin in connection id to query others users
     }
 
     else {
         alert("Please enter a nickname")
     }
+  }
+
+  function copyToClipboard() {
+    var dummy = document.createElement("input");
+    document.body.appendChild(dummy);
+    dummy.setAttribute('value', gameId);
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy); 
+  };
+
+  function handleQuestionSubmit() {
+    console.log("question", question) 
   }
 
 async function handleLogout() {
@@ -105,7 +123,8 @@ async function handleLogout() {
  : (
    <div className='App container'>
      <LobbyWrapper>
-       <h3> {nickname}, your room id is {gameId} </h3>
+       <h3> {nickname}, your room id is <b>{gameId}</b> <span> <Button size="sm" onClick={() => copyToClipboard()}>Copy</Button> </span> </h3>
+        <p> send to ur friends! </p>
         <div>
          <Button onClick={()=>setGameStart(true)}> lets go </Button>
         </div> 
@@ -114,10 +133,10 @@ async function handleLogout() {
  ));
   else return (
     <div className="App container">
-      <h1> ask your question {nickname} </h1>
-      <h3> you are in room {gameId} </h3>
+      <h1> whats your question, {nickname} ?</h1>
+      <h3> you are in room <Button onClick={() => copyToClipboard()}> <b>{gameId} </b> </Button> </h3>
       <FormControl size="lg" type="text" placeholder="ask a question" onChange={e => setQuestion(e.target.value)}/> 
-       <Button onClick={() => console.log("time to ans qs")}> submit </Button> 
+       <Button onClick={() => handleQuestionSubmit()}> submit </Button> 
     </div> 
   );
 }
