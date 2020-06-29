@@ -4,25 +4,20 @@ import { onError } from "../libs/errorLib";
 import config from "../config";
 import {Button} from "react-bootstrap";
 import styled from "styled-components"
+import COLORS from "../libs/colors"
 
-const questions = [
-  {id: '4', question: 'question 1'}, 
-  {id: '5', question: 'question 2'},
-  {id: '6', question: 'question 1'}, 
-  {id: '7', question: 'question 1'}, 
-  {id: '8', question: 'question 1'}
-]
 
-export default function Question({qIDs, socket, ...props}) {
+export default function Question({qIDs, pickQuestion, ...props}) {
 
+  function random_color() {
+    return '#' +  Math.random().toString(16).substr(-6);
+  }
   
   return (
-    <div className="questions">
+    <div className="questions" style={{display: "flex", justifyContent: "space-around"}}>
       {qIDs.map(data => 
-        <Button style={{margin: "15px"}} onClick={()=>socket(data)}>
-          <QuestionCard>
-            {}
-          </QuestionCard>
+        <Button onClick={()=>pickQuestion(data)}>
+          <QuestionCard style={{backgroundColor: random_color()}}/>
         </Button> )}
     </div>
   );
@@ -31,8 +26,6 @@ export default function Question({qIDs, socket, ...props}) {
 const QuestionCard = styled.div`
     min-height: 100px;
     min-width: 100px;
-    margin: 55px
     padding: 50px;
-    
 `
 

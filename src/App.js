@@ -43,9 +43,10 @@ export default function App() {
   const [currAnswerer, setCurrAnswerer] = useState("")
   const [currQuestion, setCurrQuestion] = useState("")
 
-  const ws = useRef(new WebSocket("wss://g4lpvfv7x5.execute-api.us-east-2.amazonaws.com/dev"))
+  const ws = useRef(null)
 
   useEffect(() => {
+    ws.current = new WebSocket("wss://g4lpvfv7x5.execute-api.us-east-2.amazonaws.com/dev");
     try {
       ws.current.onmessage = (e) => {
         const data = JSON.parse(e.data)
@@ -66,7 +67,7 @@ export default function App() {
       }
     }
     catch(e) {console.log("error: ", e) }
-  });
+  }, []);
 
   useEffect(() => () => ws.current.close(), [ws])
 
@@ -85,7 +86,7 @@ export default function App() {
     if (nickname !== "") {
       setId(makeid(5))
       setGenerateGame(true)
-     ws.current.send(JSON.stringify({"action": "getPotentialAnswerers"} ))
+     ws.current.send(JSON.stringify({"action": "updateUserInfo", "roundID": "420", "username": "test"}))
       // need to push nickname, connect to real-time and store connection id in state
       // also need to initialize roundid in connectionid
       // ** how are we going to show the other players that have joined the lobby? **
@@ -198,7 +199,7 @@ async function handleLogout() {
     (
       <div className="App container">
         <LobbyWrapper>
-          <Questions questions={potentialQs}/>
+          <Questions questions={potentialQs} pickQuestion={qid => ws.current.send(JSON.stringify({"action": "askQuestion", "questionID": qid}))} />
         </LobbyWrapper>
       </div> 
     )

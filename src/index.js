@@ -36,7 +36,7 @@ Amplify.configure({
 
 ReactDOM.render(
   <Router>
-    <Mockqs />
+    <App />
   </Router>,
   document.getElementById('root')
 );
