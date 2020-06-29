@@ -14,13 +14,11 @@ const questions = [
 ]
 
 export default function Question(props) {
-
   return (
     <div className="questions">
-      {props.questions.map(data => 
-        <Button style={{margin: "15px"}}>
+      {props.questions && props.questions.map(data => 
+        <Button id={data} style={{margin: "15px"}} onClick={e=> props.handleQSelection(e.target.parentElement.id)}>
           <QuestionCard>
-            {data.question}
           </QuestionCard>
         </Button> )}
     </div>
