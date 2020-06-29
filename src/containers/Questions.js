@@ -1,17 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { API } from "aws-amplify";
-import { onError } from "../libs/errorLib";
-import config from "../config";
+import React from "react";
 import {Button} from "react-bootstrap";
 import styled from "styled-components"
-
-const questions = [
-  {id: '4', question: 'question 1'}, 
-  {id: '5', question: 'question 2'},
-  {id: '6', question: 'question 1'}, 
-  {id: '7', question: 'question 1'}, 
-  {id: '8', question: 'question 1'}
-]
 
 export default function Question(props) {
   return (

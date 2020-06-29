@@ -4,14 +4,12 @@ import "./App.css";
 //import Routes from './Routes';
 import Questions from './containers/Questions';
 import styled from 'styled-components';
-import Sockette from 'sockette';
 
 export default function App() {
   const [gameId, setId] = useState("");
   const [startGame, setGameStart] = useState(false) // players have all joined, start game 
   const [nickname, setNickname] = useState('')
   const [question, setQuestion] = useState('')
-  const [submitQuestion, setSubmitQuestion] = useState(true)
   const [generateGame, setGenerateGame] = useState(false)
   const [potentialAns, setPotentialAns] = useState([])
   const [potentialQs, setPotentialQs] = useState([])
@@ -92,7 +90,7 @@ export default function App() {
 
   useEffect(() => { 
     if (currQuestionID !== "") {
-      const question = ws.current.send(JSON.stringify({"action": "askQuestion", "questionID": `${currQuestionID}`}))
+       ws.current.send(JSON.stringify({"action": "askQuestion", "questionID": `${currQuestionID}`}))
     }
   }, [currQuestionID])
 
@@ -131,7 +129,7 @@ export default function App() {
   }
 
   function handleQuestionSubmit() {
-    const response = ws.current.send(JSON.stringify({"action": "createQuestion", "question": `${question}`}))
+    ws.current.send(JSON.stringify({"action": "createQuestion", "question": `${question}`}))
     setGameState("waitsubmit")
   }
 
