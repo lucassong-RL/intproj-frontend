@@ -13,14 +13,15 @@ const questions = [
   {id: '8', question: 'question 1'}
 ]
 
-export default function Question(props) {
+export default function Question({qIDs, socket, ...props}) {
 
+  
   return (
     <div className="questions">
-      {props.questions.map(data => 
-        <Button style={{margin: "15px"}}>
+      {qIDs.map(data => 
+        <Button style={{margin: "15px"}} onClick={()=>socket(data)}>
           <QuestionCard>
-            {data.question}
+            {}
           </QuestionCard>
         </Button> )}
     </div>
@@ -32,5 +33,6 @@ const QuestionCard = styled.div`
     min-width: 100px;
     margin: 55px
     padding: 50px;
+    
 `
 

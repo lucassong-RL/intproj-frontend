@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Mockqs from "./Mockqs";
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router} from 'react-router-dom';
 import {Amplify} from 'aws-amplify';
@@ -35,7 +36,7 @@ Amplify.configure({
 
 ReactDOM.render(
   <Router>
-    <App />
+    <Mockqs />
   </Router>,
   document.getElementById('root')
 );
