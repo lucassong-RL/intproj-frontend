@@ -31,44 +31,49 @@ export default function App() {
              <Button onClick={() => handleQuestionSubmit()}> submit </Button> 
       </div>
       );
-    case 'waitsubmit': return (<> waiting for all players to submit a question </>)
-    case 'waitanswer': return (<> current answerer is: {currAnswerer} </>);
-    case 'answer': return (<> {currQuestion} <Button onClick={finishQuestion}> finished answering </Button> </>)
-    case 'pickquestion': return(
-      <> 
-        questions to choose from 
-        <Questions questions={potentialQs} handleQSelection={e => handleQSelection(e)}/> 
-      </>);
-    case 'pickplayer': return(<> {potentialAns.map(data => <Button onClick={(e) => pickNextUser(e.target.innerText)}>{data}</Button>)} </>);
-    default: return (<> uh oh, you've broken the game. please refresh and rejoin </>);
+      case 'waitsubmit': return (<> waiting for all players to submit a question </>)
+      case 'waitanswer': return (<> current answerer is: {currAnswerer} </>);
+      case 'answer': return (<> {currQuestion} <Button onClick={finishQuestion}> finished answering </Button> </>)
+      case 'pickquestion': return(
+        <> 
+          questions to choose from 
+          <Questions questions={potentialQs} handleQSelection={e => handleQSelection(e)}/> 
+        </>
+      );
+      case 'pickplayer': return(<> {potentialAns.map(data => <Button onClick={(e) => pickNextUser(e.target.innerText)}>{data}</Button>)} </>);
+      default: return (<> uh oh, you've broken the game. please refresh and rejoin </>);
     }
   }
 
   const ws = useRef(null)
   useEffect(() => {
-    ws.current = new WebSocket("wss://g4lpvfv7x5.execute-api.us-east-2.amazonaws.com/dev"))
+    ws.current = new WebSocket("wss://g4lpvfv7x5.execute-api.us-east-2.amazonaws.com/dev")
     try {
       ws.current.onmessage = (e) => {
         const data = JSON.parse(e.data)
         const messageType = data.type
         switch(messageType) {
           // returns all people that can still play
-          case "pickAnswerer": { setPotentialAns(data.options)} 
+          case "pickAnswerer":  setPotentialAns(data.options) 
+            break;
           // returns all questions that can still be answered
-          case "pickQuestion": { 
+          case "pickQuestion":  
             const qs = data.questionIDs
             setPotentialQs(qs)
             setGameState("pickquestion")
-          }
+            break;
+          
           // returns whoever has been selected to answer next
-          case "nextAnswerer": {
+          case "nextAnswerer": 
             setCurrAnswerer(data.answerer)
-            setGameState("waitanswer")}
+            setGameState("waitanswer")
+            break;
           // returns the question to be answered now
-          case "question": {
-              setCurrQuestion(data.question)
-              setGameState("answer")
-          }
+          case "question": 
+            setCurrQuestion(data.question)
+            setGameState("answer")
+            break;
+          default: 
         }
         
         console.log("message from", e)
