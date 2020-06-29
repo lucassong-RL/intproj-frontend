@@ -19,19 +19,21 @@ export default function App() {
   const [currQuestion, setCurrQuestion] = useState("")
   const [currQuestionID, setCurrQuestionID] = useState("")
   const [gameState, setGameState] = useState("submit")
-  const [admin, setAdmin] = useState("false")
+  const [admin, setAdmin] = useState(false)
 
   function renderStages(gameState) {
     switch(gameState) {
       case 'submit': return ( 
-          <div className="App container">
+        <>
             <h1> whats your question, {nickname} ?</h1>
             <h3> you are in room <Button onClick={() => copyToClipboard()}> <b>{gameId} </b> </Button> </h3>
             <FormControl size="lg" type="text" placeholder="ask a question" onChange={e => setQuestion(e.target.value)}/> 
              <Button onClick={() => handleQuestionSubmit()}> submit </Button> 
-      </div>
+        </>
       );
-      case 'waitsubmit': return (<> waiting for all players to submit a question </>)
+      case 'waitsubmit': return (
+        <> waiting for all players to submit a question {admin && <Button> start </Button> }</>
+      )
       case 'waitanswer': return (<> current answerer is: {currAnswerer} </>);
       case 'answer': return (<> {currQuestion} <Button onClick={finishQuestion}> finished answering </Button> </>)
       case 'pickquestion': return(
@@ -213,11 +215,19 @@ export default function App() {
   else return (
     <div className='App container'>
       <LobbyWrapper>
+      {admin && <AdminHeader> game admin </AdminHeader>}
           {renderStages(gameState)}
       </LobbyWrapper>
     </div>
   );
 }
+
+const AdminHeader = styled.div`
+    text-align: right;
+    opacity: 0.6;
+    font-size: 14px;
+    font-weight: bold;
+`
 
 const LobbyWrapper = styled.div`
     margin: auto;
