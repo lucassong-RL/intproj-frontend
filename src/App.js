@@ -26,16 +26,16 @@ export default function App() {
       case 'submit': return ( 
         <>
             <h1> whats your question, {nickname} ?</h1>
-            <h3> you are in room <Button onClick={() => copyToClipboard()}> <b>{gameId} </b> </Button> </h3>
-            <FormControl size="lg" type="text" placeholder="ask a question" onChange={e => setQuestion(e.target.value)}/> 
+            <h3> you are in room <Button id="copy" onClick={() => copyToClipboard()}> <b>{gameId} </b> </Button> </h3>
+            <FormControl size="lg" type="text" id="ask" placeholder="ask a question" onChange={e => setQuestion(e.target.value)}/> 
              <Button onClick={() => handleQuestionSubmit()}> submit </Button> 
         </>
       );
       case 'waitsubmit': return (
-        <> waiting for all players to submit a question {admin && <Button> start </Button> }</>
+        <> waiting for all players to submit a question {admin && <Button id="forcestart" > start </Button> }</>
       )
       case 'waitanswer': return (<> current answerer is: {currAnswerer} </>);
-      case 'answer': return (<> {currQuestion} <Button onClick={finishQuestion}> finished answering </Button> </>)
+      case 'answer': return (<> {currQuestion} <Button id="finishans" onClick={finishQuestion}> finished answering </Button> </>)
       case 'pickquestion': return(
         <> 
           questions to choose from 
@@ -185,16 +185,16 @@ export default function App() {
               start new game 
             </h3> 
             <div>
-              <Button onClick={() => handleGenerate()}>start new game </Button>
+              <Button id="newgame" onClick={() => handleGenerate()}>start new game </Button>
             </div>
          </NewGameWrapper>
           <JoinGameWrapper>
             <h3>
              join game
             </h3>
-          <FormControl size="lg" type="text" placeholder="room code" onChange={(e) => setId(e.target.value)}/>
+          <FormControl size="lg" type="text" id="roomcode" placeholder="room code" onChange={(e) => setId(e.target.value)}/>
             <div>
-              <Button onClick={() => handleJoinGame()}> start </Button>
+              <Button id="joingame" onClick={() => handleJoinGame()}> start </Button>
             </div>
           </JoinGameWrapper>
         </LobbyWrapper>
@@ -206,7 +206,7 @@ export default function App() {
        <h3> {nickname}, your room id is <b>{gameId}</b> <span> <Button size="sm" onClick={() => copyToClipboard()}>Copy</Button> </span> </h3>
         <p> send to ur friends! </p>
         <div>
-         <Button onClick={()=>setGameStart(true)}> lets go </Button>
+         <Button id="startgame" onClick={()=>setGameStart(true)}> lets go </Button>
         </div> 
      </LobbyWrapper>
    </div>
