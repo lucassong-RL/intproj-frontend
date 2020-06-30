@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/intproj-frontend/static/css/main.994005cd.chunk.css",
-    "main.js": "/intproj-frontend/static/js/main.b9be67a5.chunk.js",
-    "main.js.map": "/intproj-frontend/static/js/main.b9be67a5.chunk.js.map",
+    "main.js": "/intproj-frontend/static/js/main.492b7665.chunk.js",
+    "main.js.map": "/intproj-frontend/static/js/main.492b7665.chunk.js.map",
     "runtime-main.js": "/intproj-frontend/static/js/runtime-main.9cb5d27b.js",
     "runtime-main.js.map": "/intproj-frontend/static/js/runtime-main.9cb5d27b.js.map",
     "static/js/2.1ca0c1cd.chunk.js": "/intproj-frontend/static/js/2.1ca0c1cd.chunk.js",
     "static/js/2.1ca0c1cd.chunk.js.map": "/intproj-frontend/static/js/2.1ca0c1cd.chunk.js.map",
     "index.html": "/intproj-frontend/index.html",
-    "precache-manifest.c18a6cbed5742e95d2dafd6dd2f06a28.js": "/intproj-frontend/precache-manifest.c18a6cbed5742e95d2dafd6dd2f06a28.js",
+    "precache-manifest.cce999469956f8a79108e5c7b42c47ed.js": "/intproj-frontend/precache-manifest.cce999469956f8a79108e5c7b42c47ed.js",
     "service-worker.js": "/intproj-frontend/service-worker.js",
     "static/css/main.994005cd.chunk.css.map": "/intproj-frontend/static/css/main.994005cd.chunk.css.map",
     "static/js/2.1ca0c1cd.chunk.js.LICENSE.txt": "/intproj-frontend/static/js/2.1ca0c1cd.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.9cb5d27b.js",
     "static/js/2.1ca0c1cd.chunk.js",
     "static/css/main.994005cd.chunk.css",
-    "static/js/main.b9be67a5.chunk.js"
+    "static/js/main.492b7665.chunk.js"
   ]
 }
