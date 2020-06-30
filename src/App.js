@@ -22,11 +22,12 @@ export default function App() {
   const [players, setPlayers] = useState([])
   const [myTurn, setMyTurn] = useState(false)
   const [newQs, setNewQs] = useState("")
+  const [readyToStart, setReadyToStart] = useState(false)
 
   function renderStages(gameState) {
     switch(gameState) {
       case 'submit': return ( 
-        <Game header="whats your question"
+        <Game header="What's Your Question?"
             gameId={gameId}
             handleQuestionSubmit={()=>handleQuestionSubmit()}
             setQuestion={setQuestion}
@@ -34,37 +35,37 @@ export default function App() {
         />
       );
       case 'waitsubmit': return (
-        <Game header="Waiting for Players to Submit Questions"
-            description="*cue jeopardy theme song*"
+        <Game header={readyToStart ? "All Questions are in" : "Waiting for Players to Submit Questions"}
+            description={readyToStart ? "The game is afoot" : "*cue jeopardy theme song*"}
             gameId={gameId}
             startRound={() => startRound()}
             admin={admin}
             players={players}
             newQs={newQs}
             showQs={true}
+            readyStart={readyToStart}
         />
       );
       case 'waitanswer': return (
-          <Game header="waiting for question selection..."
+          <Game header={currAnswerer + " is picking a question!"}
               description="doo be doo"
               gameId={gameId}
-              answerer={currAnswerer}
               players={players}
           />
       ); 
       case 'answer': return (
-        <Game header="answer time" 
-            description="be honest... ;)"
+        <Game header={myTurn ? "Answer on Zoom for Everyone!" : currAnswerer + " has chosen!"}
+            description={myTurn ? "Be honest... ;)" : "Pay attention to the Zoom for their answer!"}
             gameId={gameId}
             question={currQuestion}
             myTurn={myTurn}
             finishQuestion={finishQuestion}
-            answerer={currAnswerer}
+            // answerer={currAnswerer}
             players={players}
         />
       ); 
       case 'pickquestion': return(
-        <Game header="choose a question"
+        <Game header="Choose a Question"
             description="no peeking!"
             gameId={gameId}
             questions={potentialQs}
@@ -73,8 +74,8 @@ export default function App() {
         />
       );
       case 'pickplayer': return(
-        <Game header="hot potato"
-            description="choose a player to answer next"
+        <Game header="Hot Potato"
+            description="Choose a player to answer next"
             gameId={gameId}
             potentialAns={potentialAns}
             pickNextUser={pickNextUser}
@@ -82,7 +83,7 @@ export default function App() {
         />
       );
       default: return (
-        <Game header="uh oh, you've broke the game. please refresh and rejoin"
+        <Game header={"uh oh, you've broken the game. Please refresh and rejoin room " + gameId}
         />
       );
     }
@@ -101,8 +102,11 @@ export default function App() {
             break;
           // returns all people that can still play
           case "newQuestion": 
-            console.log("question" ,data.question)
+            console.log("new question" ,data)
             setNewQs(data.question)
+            if (data.numQuestions == data.numPlayers){
+              setReadyToStart(true);
+            }
             break;
           case "pickAnswerer":  
             setPotentialAns(data.options) 
