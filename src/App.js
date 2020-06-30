@@ -23,6 +23,7 @@ export default function App() {
   const [myTurn, setMyTurn] = useState(false)
   const [newQs, setNewQs] = useState("")
   const [readyToStart, setReadyToStart] = useState(false)
+  const [gameEnd, setGameEnd] = useState(false)
 
   function renderStages(gameState) {
     switch(gameState) {
@@ -127,8 +128,15 @@ export default function App() {
             break;
           // returns the question to be answered now
           case "question": 
-            setCurrQuestion(data.question)
-            setGameState("answer")
+            if(data.questionsRemaining > 0) {
+              setCurrQuestion(data.question)
+              setGameState("answer")
+            }
+            else {
+              setCurrQuestion(data.question)
+              setGameState("answer")
+              setGameEnd(true);
+            }
             break;
           default: 
         }
@@ -190,6 +198,7 @@ export default function App() {
 
   function handleQuestionSubmit() {
     ws.current.send(JSON.stringify({"action": "createQuestion", "question": `${question}`}))
+    setGameEnd(false)
     setGameState("waitsubmit")
   }
 
@@ -199,7 +208,10 @@ export default function App() {
 
   function finishQuestion() {
     ws.current.send(JSON.stringify({"action": "getPotentialAnswerers"}))
-    setGameState("pickplayer")
+    if (!gameEnd) 
+        setGameState("pickplayer")
+    else
+        setGameState("submit")
   }
 
   function pickNextUser(user) {
