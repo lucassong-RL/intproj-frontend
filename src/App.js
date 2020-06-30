@@ -228,27 +228,32 @@ export default function App() {
   if (!startGame) return (
     <div className="App container">
         <LobbyWrapper>
-          <h1> personal trivia </h1> {nickname && 
-            <h2> welcome {nickname} </h2>
+          <h1> Personal Trivia </h1> 
+          <hr></hr>
+          {nickname && 
+            <h2> Welcome {nickname} </h2>
+          }
+          {!nickname && 
+            <h2> Enter nickname to get started: {nickname} </h2>
           }
         <NickNameWrapper>
-          <FormControl size="lg" type="text" id="nickname" placeholder="nickname" onChange={e => setNickname(e.target.value)}/>
+          <FormControl size="lg" type="text" id="nickname" placeholder="Nickname" onChange={e => setNickname(e.target.value)}/>
         </NickNameWrapper>
          <NewGameWrapper>
-            <h3>
-              start new game 
-            </h3> 
             <div>
-              <Button id="newgame" onClick={() => handleGenerate()}>start new game </Button>
+              <Button id="newgame" size="lg" onClick={() => handleGenerate()}>Start New Game </Button>
             </div>
          </NewGameWrapper>
           <JoinGameWrapper>
             <h3>
-             join game
+             -OR-
             </h3>
-          <FormControl size="lg" type="text" id="roomcode" placeholder="room code" onChange={(e) => setId(e.target.value)}/>
+            <h3>
+             Join Game
+            </h3>
+          <FormControl size="lg" type="text" id="roomcode" placeholder="Room Code" onChange={(e) => setId(e.target.value)}/>
             <div>
-              <Button id="joingame" onClick={() => handleJoinGame()}> start </Button>
+              <Button id="joingame" onClick={() => handleJoinGame()}> Join Game </Button>
             </div>
           </JoinGameWrapper>
         </LobbyWrapper>

@@ -8,8 +8,42 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1{
   font-family: "PT Serif", serif;
+  color:#E76F51;
+  font-weight: 700;
+}
+h2, h3, h4, h5, h6 {
+  font-family: "PT Serif", serif;
+  color: #264653;
+}
+hr{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #000000;
+}
+.btn{
+  background-color: #E76F51;  
+  color: #FFFFFF;
+  font-weight: 900;
+  font-size: larger;
+  min-height: 100px;
+  min-width: 200px;
+  border-radius: 15px;
+}
+
+#joingame{
+  margin-top: 15px;
+}
+
+.form-control{
+  max-width: 400px;
+  text-align: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 50px;
 }
 
 select.form-control,
