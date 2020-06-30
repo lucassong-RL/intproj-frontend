@@ -1,10 +1,10 @@
 import React, {useEffect, useState, useRef} from "react";
 import { FormControl, Button } from "react-bootstrap";
 import "./App.css";
-//import Routes from './Routes';
 import Questions from './containers/Questions';
 import styled from 'styled-components';
 import Players from './components/Players';
+import Game from './containers/Game';
 
 export default function App() {
   const [gameId, setId] = useState("");
@@ -20,6 +20,7 @@ export default function App() {
   const [gameState, setGameState] = useState("submit")
   const [admin, setAdmin] = useState(false)
   const [players, setPlayers] = useState([])
+  const [myTurn, setMyTurn] = useState(false)
 
   function renderStages(gameState) {
     switch(gameState) {
@@ -33,17 +34,41 @@ export default function App() {
         </>
       );
       case 'waitsubmit': return (
-        <> waiting for all players to submit a question {admin && <Button id="forcestart" onClick={() => pickSelf()}> start </Button> }</>
-      )
-      case 'waitanswer': return (<> current answerer is: {currAnswerer} </>);
-      case 'answer': return (<> {currQuestion} <Button id="finishans" onClick={finishQuestion}> finished answering </Button> </>)
-      case 'pickquestion': return(
-        <> 
-          questions to choose from 
-          <Questions questions={potentialQs} handleQSelection={e => handleQSelection(e)}/> 
-        </>
+        <Game header="waiting for players to submit questions"
+            gameId={gameId}
+            startRound={() => startRound()}
+            admin={admin}
+        />
       );
-      case 'pickplayer': return(<> {potentialAns.map(data => <Button onClick={(e) => pickNextUser(e.target.innerText)}>{data}</Button>)} </>);
+      case 'waitanswer': return (
+          <Game header="waiting for question selection..."
+              gameId={gameId}
+              answerer={currAnswerer}
+          />
+      ); 
+      case 'answer': return (
+        <Game header="answer time!" 
+            gameId={gameId}
+            question={currQuestion}
+            myTurn={myTurn}
+            finishQuestion={finishQuestion}
+            answerer={currAnswerer}
+        />
+      ); 
+      case 'pickquestion': return(
+        <Game header="choose a question, no peeking!"
+            gameId={gameId}
+            questions={potentialQs}
+            handleSelection={e=> handleQSelection(e)}
+        />
+      );
+      case 'pickplayer': return(
+        <Game header="choose who'll be in the hot seat next"
+            gameId={gameId}
+            potentialAns={potentialAns}
+            pickNextUser={pickNextUser}
+        />
+      );
       default: return (<> uh oh, you've broken the game. please refresh and rejoin </>);
     }
   }
@@ -56,14 +81,18 @@ export default function App() {
         const data = JSON.parse(e.data)
         const messageType = data.type
         switch(messageType) {
-          case "newPlayer": setPlayers(data.users)
+          case "newPlayer": 
+            setPlayers(data.users)
             break;
           // returns all people that can still play
-          case "pickAnswerer":  setPotentialAns(data.options) 
+          case "pickAnswerer":  
+            setPotentialAns(data.options) 
+            setMyTurn(false)
             break;
           // returns all questions that can still be answered
           case "pickQuestion":  
             const qs = data.questionIDs
+            setMyTurn(true)
             setPotentialQs(qs)
             setGameState("pickquestion")
             break;
@@ -80,8 +109,7 @@ export default function App() {
             break;
           default: 
         }
-        
-        console.log("message from", e)
+        console.log("messsage", e)
       }
       ws.current.onerror = (e) => {
         console.log("error: ", e)
@@ -101,8 +129,8 @@ export default function App() {
 
   useEffect(() => () => {ws.current.close()}, [ws])
 
-  function pickSelf() {
-    ws.current.send(JSON.stringify({"action": "setAnswerer", "answerer": `${nickname}`}))
+  function startRound() {
+    ws.current.send(JSON.stringify({"action": "startGame"}))
   }
 
   function handleGenerate() {
