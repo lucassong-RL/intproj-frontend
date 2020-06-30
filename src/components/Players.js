@@ -58,6 +58,3 @@ const PlayerWrapper = styled.div`
 const Player = styled.div`
     padding: 1em;
 `
-const Player = styled.div`
-    padding: 1em;
-`
