@@ -53,7 +53,7 @@ export default function App() {
           />
       ); 
       case 'answer': return (
-        <Game header="answer time" 
+        <Game header="Answer Time" 
             description="be honest... ;)"
             gameId={gameId}
             question={currQuestion}
@@ -64,7 +64,7 @@ export default function App() {
         />
       ); 
       case 'pickquestion': return(
-        <Game header="choose a question"
+        <Game header="Choose a Question"
             description="no peeking!"
             gameId={gameId}
             questions={potentialQs}
@@ -74,7 +74,7 @@ export default function App() {
       );
       case 'pickplayer': return(
         <Game header="hot potato"
-            description="choose a player to answer next"
+            description="Choose a player to nswer next"
             gameId={gameId}
             potentialAns={potentialAns}
             pickNextUser={pickNextUser}
