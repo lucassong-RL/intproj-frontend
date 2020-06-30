@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { API } from "aws-amplify";
-import { onError } from "../libs/errorLib";
-import config from "../config";
+import React from "react";
 import {Button} from "react-bootstrap";
 import styled from "styled-components"
 
+<<<<<<< HEAD
 const questions = [
   {id: '4', question: 'question 1'}, 
   {id: '5', question: 'question 2'},
@@ -22,6 +20,14 @@ export default function Question({qIDs, socket, ...props}) {
         <Button style={{margin: "15px"}} onClick={()=>socket(data)}>
           <QuestionCard>
             {}
+=======
+export default function Question(props) {
+  return (
+    <div className="questions">
+      {props.questions && props.questions.map(data => 
+        <Button id={data} style={{margin: "15px"}} onClick={e=> props.handleQSelection(e.target.parentElement.id)}>
+          <QuestionCard>
+>>>>>>> 69f132a8223c99ecb6404c480a4479ccb91c5704
           </QuestionCard>
         </Button> )}
     </div>
