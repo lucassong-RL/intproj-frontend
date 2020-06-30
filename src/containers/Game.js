@@ -16,6 +16,9 @@ export default function Game(props) {
     document.execCommand("copy");
     document.body.removeChild(dummy);
     setShowCopy(true)
+    setTimeout(() => {
+      setShowCopy(false)
+    }, 3000);
   }
 
   function toggleShowCopy(){ setShowCopy(!showCopy)}
