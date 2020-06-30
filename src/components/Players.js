@@ -57,8 +57,4 @@ const PlayerWrapper = styled.div`
 `
 const Player = styled.div`
     padding: 1em;
-<<<<<<< HEAD
 `
-=======
-`
->>>>>>> 9cfda0dcce9a70b59c77057d45cbb838f9868641
