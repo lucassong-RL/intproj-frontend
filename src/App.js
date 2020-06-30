@@ -142,7 +142,6 @@ export default function App() {
               setGameState("submit")
           default: 
         }
-        console.log("messsage", e)
       }
       ws.current.onerror = (e) => {
         console.log("error: ", e)
@@ -217,7 +216,6 @@ export default function App() {
 
   function pickNextUser(user) {
     ws.current.send(JSON.stringify({"action": "setAnswerer", "answerer": `${user}`}))  
-    console.log("picked", user)
   }
 
 
