@@ -233,7 +233,6 @@ export default function App() {
     <div className="App container">
         <LobbyWrapper>
           <h1> Personal Trivia </h1> 
-          <hr></hr>
           {nickname && 
             <h2> Welcome {nickname} </h2>
           }
