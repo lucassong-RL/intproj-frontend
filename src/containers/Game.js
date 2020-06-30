@@ -36,8 +36,7 @@ export default function Game(props) {
           {props.potentialAns && props.potentialAns.map(data => <Button onClick={(e) => props.pickNextUser(e.target.innerText)}>{data}</Button>)}
         </Col>
         <Col style={{maxWidth: "30%"}}>
-            {/* <Players players={props.players}/> */}
-            <Players players={["some", "test", "player", "names", "and", "such"]}/>
+            <Players players={props.players}/>
             {props.gameId && 
             <h5> You are in room &nbsp;
                 <Button id="copy" onClick={() => copyToClipboard()}> <b>{props.gameId} </b> </Button> 
