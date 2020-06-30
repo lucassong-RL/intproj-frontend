@@ -21,17 +21,17 @@ export default function App() {
   const [admin, setAdmin] = useState(false)
   const [players, setPlayers] = useState([])
   const [myTurn, setMyTurn] = useState(false)
+  const [newQs, setNewQs] = useState("")
 
   function renderStages(gameState) {
     switch(gameState) {
       case 'submit': return ( 
-        <>
-            <h1> whats your question, {nickname} ?</h1>
-            <h3> you are in room <Button id="copy" onClick={() => copyToClipboard()}> <b>{gameId} </b> </Button> </h3>
-        <Players players={players}/>
-            <FormControl size="lg" type="text" id="ask" placeholder="ask a question" onChange={e => setQuestion(e.target.value)}/> 
-             <Button onClick={() => handleQuestionSubmit()}> submit </Button> 
-        </>
+        <Game header="whats your question"
+            gameId={gameId}
+            handleQuestionSubmit={()=>handleQuestionSubmit()}
+            setQuestion={setQuestion}
+            players={players}
+        />
       );
       case 'waitsubmit': return (
         <Game header="waiting for players to submit questions"
@@ -40,6 +40,8 @@ export default function App() {
             startRound={() => startRound()}
             admin={admin}
             players={players}
+            newQs={newQs}
+            showQs={true}
         />
       );
       case 'waitanswer': return (
@@ -98,6 +100,9 @@ export default function App() {
             setPlayers(data.users)
             break;
           // returns all people that can still play
+          case "newQuestion": 
+            console.log("question" ,data.question)
+            setNewQs(data.question)
           case "pickAnswerer":  
             setPotentialAns(data.options) 
             setMyTurn(false)
