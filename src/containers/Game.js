@@ -54,7 +54,7 @@ const GridWrapper = styled.div`
 
 const Col = styled.div`
     min-width: 30%;
-    text-align: center;
+    text-align: left;
     padding: 1rem;
 `
 
