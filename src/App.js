@@ -55,7 +55,7 @@ export default function App() {
           />
       ); 
       case 'answer': return (
-        <Game header={myTurn ? "🎙️ Answer on Zoom for Everyone!" : "🗣️" +  currAnswerer + " has chosen!"}
+        <Game header={myTurn ? "🎙️ Answer on Zoom for Everyone!" : "🗣️ " +  currAnswerer + " has chosen!"}
             description={myTurn ? "Be honest... ;)" : "Pay attention to the Zoom for their answer!"}
             gameId={gameId}
             question={currQuestion}
