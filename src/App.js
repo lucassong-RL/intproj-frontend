@@ -258,6 +258,9 @@ export default function App() {
   else return (
     <div className='App container'>
       <LobbyWrapper>
+        <PlayerHeader>
+           {nickname}
+        </PlayerHeader>
       {admin && <AdminHeader> game admin </AdminHeader>}
           {renderStages(gameState)}
       </LobbyWrapper>
@@ -265,10 +268,17 @@ export default function App() {
   );
 }
 
+const PlayerHeader = styled.div`
+    text-align: right;
+    opacity: 0.6
+    font-size: 14px;
+    font-weight: 400;
+`
+
 const AdminHeader = styled.div`
     text-align: right;
     opacity: 0.6;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: bold;
 `
 
