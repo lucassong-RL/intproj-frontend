@@ -59,3 +59,8 @@ const Col = styled.div`
     padding: 1rem;
 `
 
+const RightCol = styled.div`
+    margin-left: 2rem;
+    float: left;
+    width: 50%;
+`
