@@ -262,7 +262,6 @@ export default function App() {
         </LobbyWrapper>
     </div> 
   )
-
   else return (
     <div className='App container'>
       <LobbyWrapper>
