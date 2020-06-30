@@ -75,7 +75,7 @@ export default function App() {
       );
       case 'pickplayer': return(
         <Game header="Hot Potato"
-            description="Choose a player to answer next"
+            description="Choose a player to Answer next"
             gameId={gameId}
             potentialAns={potentialAns}
             pickNextUser={pickNextUser}
