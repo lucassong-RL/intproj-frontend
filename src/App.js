@@ -33,7 +33,7 @@ export default function App() {
         </>
       );
       case 'waitsubmit': return (
-        <> waiting for all players to submit a question {admin && <Button id="forcestart" > start </Button> }</>
+        <> waiting for all players to submit a question {admin && <Button id="forcestart" onClick={() => pickSelf()}> start </Button> }</>
       )
       case 'waitanswer': return (<> current answerer is: {currAnswerer} </>);
       case 'answer': return (<> {currQuestion} <Button id="finishans" onClick={finishQuestion}> finished answering </Button> </>)
@@ -100,6 +100,10 @@ export default function App() {
   }, [currQuestionID])
 
   useEffect(() => () => {ws.current.close()}, [ws])
+
+  function pickSelf() {
+    ws.current.send(JSON.stringify({"action": "setAnswerer", "answerer": `${nickname}`}))
+  }
 
   function handleGenerate() {
     if (nickname !== "") {

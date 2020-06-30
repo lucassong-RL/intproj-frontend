@@ -6,7 +6,7 @@ export default function Players(props) {
   return (
     <PlayerWrapper>
     <h4> <b> players in lobby </b> </h4>
-    {players.length > 1 ? players.map(user => <li> {user} </li>) : <> none </>}
+    {players.length > 1 ? players.map(user => <div> {user} </div>) : <> none </>}
     </PlayerWrapper>
   );
 }
@@ -14,7 +14,7 @@ export default function Players(props) {
 const PlayerWrapper = styled.div`
     background-color: #f5f5f5;
     margin: 1rem 0rem;
-    border-radius: 0.3rem;
+    border-radius: 1rem;
     width: max-content;
     padding: 1rem;
 `
