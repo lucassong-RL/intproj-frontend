@@ -34,7 +34,7 @@ export default function App() {
         />
       );
       case 'waitsubmit': return (
-        <Game header="waiting for players to submit questions"
+        <Game header="Waiting for Players to Submit Questions"
             description="*cue jeopardy theme song*"
             gameId={gameId}
             startRound={() => startRound()}
