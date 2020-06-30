@@ -8,11 +8,10 @@ const colors = ['#264653', '#2A9D8F', '#E9C46A', '#F4A261', '#E76F51']
 function random_color() {return colors[Math.floor(Math.random() * colors.length)]}
 
 export default function Question(props) {
-  console.log(random_color())
   return (
     <div className="questions">
       {props.questions && props.questions.map(data => 
-          <QuestionCard id={data}  onClick={e=> props.handleQSelection(e.target.parentElement.id)}>
+          <QuestionCard id={data} onClick={e=> props.handleQSelection(e.target.id)}>
           </QuestionCard>
       )}
     </div>

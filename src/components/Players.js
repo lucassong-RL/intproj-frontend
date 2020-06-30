@@ -18,7 +18,7 @@ export default function Players(props) {
   return (
     <LobbyWrapper>
     
-      <HeaderWrapper> <b> Players in Lobby </b> </HeaderWrapper>
+      <HeaderWrapper> <b> Players </b> </HeaderWrapper>
       <PlayerWrapper>
       {players.length > 0 ? players.map(user => <Player style={{color: randomColor()}}> {user} </Player>) : <> None </>}
       </PlayerWrapper>
