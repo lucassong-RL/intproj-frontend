@@ -18,8 +18,13 @@ body {
   font-weight: bold;
 }
 
+#nickname {
+  margin: auto;
+}
 
-
+#roomcode {
+  margin: auto;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
