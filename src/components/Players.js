@@ -6,7 +6,7 @@ export default function Players(props) {
   return (
     <PlayerWrapper>
     <h4> <b> players in lobby </b> </h4>
-    {players.length > 1 ? players.map(user => <div> {user} </div>) : <> none </>}
+    {players.length > 0 ? players.map(user => <div> {user} </div>) : <> none </>}
     </PlayerWrapper>
   );
 }

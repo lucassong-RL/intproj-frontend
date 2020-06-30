@@ -35,41 +35,54 @@ export default function App() {
       );
       case 'waitsubmit': return (
         <Game header="waiting for players to submit questions"
+            description="*cue jeopardy theme song*"
             gameId={gameId}
             startRound={() => startRound()}
             admin={admin}
+            players={players}
         />
       );
       case 'waitanswer': return (
           <Game header="waiting for question selection..."
+              description="doo be doo"
               gameId={gameId}
               answerer={currAnswerer}
+              players={players}
           />
       ); 
       case 'answer': return (
-        <Game header="answer time!" 
+        <Game header="answer time" 
+            description="be honest... ;)"
             gameId={gameId}
             question={currQuestion}
             myTurn={myTurn}
             finishQuestion={finishQuestion}
             answerer={currAnswerer}
+            players={players}
         />
       ); 
       case 'pickquestion': return(
-        <Game header="choose a question, no peeking!"
+        <Game header="choose a question"
+            description="no peeking!"
             gameId={gameId}
             questions={potentialQs}
             handleSelection={e=> handleQSelection(e)}
+            players={players}
         />
       );
       case 'pickplayer': return(
-        <Game header="choose who'll be in the hot seat next"
+        <Game header="hot potato"
+            description="choose a player to answer next"
             gameId={gameId}
             potentialAns={potentialAns}
             pickNextUser={pickNextUser}
+            players={players}
         />
       );
-      default: return (<> uh oh, you've broken the game. please refresh and rejoin </>);
+      default: return (
+        <Game header="uh oh, you've broke the game. please refresh and rejoin"
+        />
+      );
     }
   }
 
