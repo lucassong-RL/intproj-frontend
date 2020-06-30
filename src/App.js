@@ -103,6 +103,7 @@ export default function App() {
           case "newQuestion": 
             console.log("question" ,data.question)
             setNewQs(data.question)
+            break;
           case "pickAnswerer":  
             setPotentialAns(data.options) 
             setMyTurn(false)
