@@ -31,7 +31,7 @@ export default function Game(props) {
         </Copied>}
         <Col style={{flexGrow: 1}}>
           <h1> {props.header} </h1>
-          {props.description && <p> {props.description} </p>}
+          {props.description && <b> {props.description} </b>}
           {props.showQs && <div> This just in: <b>{props.newQs}</b> </div>}
           {props.setQuestion && <FormControl size="lg" type="text" id="ask" placeholder="Ask a question" onChange={e => props.setQuestion(e.target.value)}/>}
           {props.handleQuestionSubmit && <Button onClick={() => props.handleQuestionSubmit()}> submit </Button>}

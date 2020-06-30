@@ -28,7 +28,7 @@ export default function App() {
   function renderStages(gameState) {
     switch(gameState) {
       case 'submit': return ( 
-        <Game header="What's Your Question?"
+        <Game header="❓ What's Your Question?"
             gameId={gameId}
             handleQuestionSubmit={()=>handleQuestionSubmit()}
             setQuestion={setQuestion}
@@ -36,7 +36,7 @@ export default function App() {
         />
       );
       case 'waitsubmit': return (
-        <Game header={readyToStart ? "All Questions are in" : "Waiting for Players to Submit Questions"}
+        <Game header={readyToStart ? "🌟 All Questions are in" : "🙋 Waiting for Players to Submit Questions"}
             description={readyToStart ? "The game is afoot" : "*cue jeopardy theme song*"}
             gameId={gameId}
             startRound={() => startRound()}
@@ -48,14 +48,14 @@ export default function App() {
         />
       );
       case 'waitanswer': return (
-          <Game header={currAnswerer + " is picking a question!"}
+          <Game header={"🔎 " + currAnswerer + " is picking a question!"}
               description="doo be doo"
               gameId={gameId}
               players={players}
           />
       ); 
       case 'answer': return (
-        <Game header={myTurn ? "Answer on Zoom for Everyone!" : currAnswerer + " has chosen!"}
+        <Game header={myTurn ? "🎙️ Answer on Zoom for Everyone!" : "🗣️" +  currAnswerer + " has chosen!"}
             description={myTurn ? "Be honest... ;)" : "Pay attention to the Zoom for their answer!"}
             gameId={gameId}
             question={currQuestion}
@@ -66,7 +66,7 @@ export default function App() {
         />
       ); 
       case 'pickquestion': return(
-        <Game header="Choose a Question"
+        <Game header="🤔 Choose a Question"
             description="no peeking!"
             gameId={gameId}
             questions={potentialQs}
@@ -75,7 +75,7 @@ export default function App() {
         />
       );
       case 'pickplayer': return(
-        <Game header="Hot Potato"
+        <Game header="🥔 Hot Potato"
             description="Choose a player to Answer next"
             gameId={gameId}
             potentialAns={potentialAns}
@@ -84,7 +84,7 @@ export default function App() {
         />
       );
       default: return (
-        <Game header={"uh oh, you've broken the game. Please refresh and rejoin room " + gameId}
+        <Game header={"💔 uh oh, you've broken the game. Please refresh and rejoin room " + gameId}
         />
       );
     }
@@ -120,7 +120,6 @@ export default function App() {
             setPotentialQs(qs)
             setGameState("pickquestion")
             break;
-          
           // returns whoever has been selected to answer next
           case "nextAnswerer": 
             setCurrAnswerer(data.answerer)
@@ -135,9 +134,11 @@ export default function App() {
             else {
               setCurrQuestion(data.question)
               setGameState("answer")
-              setGameEnd(true);
             }
             break;
+          case "roundend": 
+              setGameEnd(false)
+              setGameState("submit")
           default: 
         }
         console.log("messsage", e)
@@ -198,7 +199,6 @@ export default function App() {
 
   function handleQuestionSubmit() {
     ws.current.send(JSON.stringify({"action": "createQuestion", "question": `${question}`}))
-    setGameEnd(false)
     setGameState("waitsubmit")
   }
 
@@ -208,10 +208,8 @@ export default function App() {
 
   function finishQuestion() {
     ws.current.send(JSON.stringify({"action": "getPotentialAnswerers"}))
-    if (!gameEnd) 
-        setGameState("pickplayer")
-    else
-        setGameState("submit")
+    if (!gameEnd) setGameState("pickplayer")
+    else  ws.current.send(JSON.stringify({"action": "endRound"}))
   }
 
   function pickNextUser(user) {
@@ -244,7 +242,7 @@ export default function App() {
   if (!startGame) return (
     <div className="App container">
         <LobbyWrapper>
-          <h1> Personal Trivia </h1> 
+          <h1> 💁 Personal Trivia </h1> 
           {nickname && 
             <h2> Welcome {nickname} </h2>
           }
@@ -264,11 +262,11 @@ export default function App() {
              -OR-
             </h3>
             <h3>
-             Join Game
+             Join Existing Game
             </h3>
           <FormControl size="lg" type="text" id="roomcode" placeholder="Room Code" onChange={(e) => setId(e.target.value)}/>
             <div>
-              <Button id="joingame" onClick={() => handleJoinGame()}> Join Game </Button>
+              <Button id="joingame" onClick={() => handleJoinGame()}> Join </Button>
             </div>
           </JoinGameWrapper>
         </LobbyWrapper>
