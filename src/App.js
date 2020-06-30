@@ -132,11 +132,12 @@ export default function App() {
               setGameState("answer")
             }
             else {
+              setGameEnd(true)
               setCurrQuestion(data.question)
               setGameState("answer")
             }
             break;
-          case "roundend": 
+          case "roundEnd": 
               setGameEnd(false)
               setGameState("submit")
           default: 
@@ -207,8 +208,10 @@ export default function App() {
   }
 
   function finishQuestion() {
-    ws.current.send(JSON.stringify({"action": "getPotentialAnswerers"}))
-    if (!gameEnd) setGameState("pickplayer")
+    if (gameEnd===false){
+      setGameState("pickplayer")
+      ws.current.send(JSON.stringify({"action": "getPotentialAnswerers"}))
+    }
     else  ws.current.send(JSON.stringify({"action": "endRound"}))
   }
 
