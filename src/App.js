@@ -159,7 +159,7 @@ export default function App() {
       setAdmin(true)
       ws.current.send(JSON.stringify({"action": "updateUserInfo", "roundID": `${roundId}`, "username": `${nickname}`}))        
       
-      setGenerateGame(true)
+      setGameStart(true)
       // need to push nickname, connect to real-time and store connection id in state
       // also need to initialize roundid in connectionid
       // ** how are we going to show the other players that have joined the lobby? **
@@ -225,7 +225,7 @@ export default function App() {
   };
 // UTILITY FUNCTIONS // 
   
-  if (!startGame) return (!generateGame ? (
+  if (!startGame) return (
     <div className="App container">
         <LobbyWrapper>
           <h1> Personal Trivia </h1> 
@@ -259,22 +259,13 @@ export default function App() {
         </LobbyWrapper>
     </div> 
   )
- : (
-   <div className='App container'>
-     <LobbyWrapper>
-       <h3> {nickname}, your room id is <b>{gameId}</b> <span> <Button size="sm" onClick={() => copyToClipboard()}>Copy</Button> </span> </h3>
-        <p> send to ur friends! </p>
-        <Players players={players}/>
-        <div>
-         <Button id="startgame" onClick={()=>setGameStart(true)}> lets go </Button>
-        </div> 
-     </LobbyWrapper>
-   </div>
- ));
 
   else return (
     <div className='App container'>
       <LobbyWrapper>
+        <PlayerHeader>
+           {nickname}
+        </PlayerHeader>
       {admin && <AdminHeader> game admin </AdminHeader>}
           {renderStages(gameState)}
       </LobbyWrapper>
@@ -282,10 +273,17 @@ export default function App() {
   );
 }
 
+const PlayerHeader = styled.div`
+    text-align: right;
+    opacity: 0.6
+    font-size: 14px;
+    font-weight: 400;
+`
+
 const AdminHeader = styled.div`
     text-align: right;
     opacity: 0.6;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: bold;
 `
 
