@@ -17,14 +17,9 @@ export default function Game(props) {
   }
   return (
     <GridWrapper>
-        <Col>
+        <LeftCol>
           <h1> {props.header} </h1>
           {props.description && <p> {props.description} </p>}
-          {props.gameId && 
-          <h5> you are in room 
-              <Button id="copy" onClick={() => copyToClipboard()}> <b>{props.gameId} </b> </Button> 
-          </h5>
-          }
           {props.showQs && <div> this just in: <b>{props.newQs}</b> </div>}
           {props.setQuestion && <FormControl size="lg" type="text" id="ask" placeholder="ask a question" onChange={e => props.setQuestion(e.target.value)}/>}
           {props.handleQuestionSubmit && <Button onClick={() => props.handleQuestionSubmit()}> submit </Button>}
@@ -39,19 +34,31 @@ export default function Game(props) {
           {(props.answerer && !props.myTurn) && <p> current answerer: {props.answerer} </p>}
           {props.questions && <Questions questions={props.questions} handleQSelection={e => props.handleSelection(e)}/>}
           {props.potentialAns && props.potentialAns.map(data => <Button onClick={(e) => props.pickNextUser(e.target.innerText)}>{data}</Button>)}
-        </Col>
-        <Col>
+        </LeftCol>
+        <RightCol>
+          {props.gameId && 
+          <h5> you are in room 
+              <Button id="copy" onClick={() => copyToClipboard()}> <b>{props.gameId} </b> </Button> 
+          </h5>
+          }
             <Players players={props.players}/>
-        </Col>
+        </RightCol>
     </GridWrapper>
   )
 }
 
 const GridWrapper = styled.div`
-    display: grid !important;
+    display: float;
 `
 
-const Col = styled.div`
-    grid-column: 1/2 !important;
+const LeftCol = styled.div`
+    margin-right: 2rem;
+    float: right;
+    width: 50%;
 `
 
+const RightCol = styled.div`
+    margin-left: 2rem;
+    float: left;
+    width: 50%;
+`
