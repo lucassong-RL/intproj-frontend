@@ -32,8 +32,8 @@ export default function Game(props) {
           {props.showQs && <div> This just in: <b>{props.newQs}</b> </div>}
           {props.setQuestion && <FormControl size="lg" type="text" id="ask" placeholder="Ask a question" onChange={e => props.setQuestion(e.target.value)}/>}
           {props.handleQuestionSubmit && <Button onClick={() => props.handleQuestionSubmit()}> submit </Button>}
-          {(props.admin===true) && <Button onClick={props.startRound}>Start the answerin!</Button>}
-          {props.question && <h3> Current Question: {props.question} </h3>}
+          {(props.admin===true && props.readyStart) && <Button onClick={props.startRound}>Start the answerin!</Button>}
+          {props.question && <h3> Question: {props.question} </h3>}
           {props.myTurn && 
               <>
               <div> <b> You are answering! </b></div>

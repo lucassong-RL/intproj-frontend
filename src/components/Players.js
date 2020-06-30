@@ -13,11 +13,9 @@ function randomColor2() {
 
 
 export default function Players(props) {
-
   const players = props.players
   return (
     <LobbyWrapper>
-    
       <HeaderWrapper> <b> Players </b> </HeaderWrapper>
       <PlayerWrapper>
       {players.length > 0 ? players.map(user => <Player style={{color: randomColor()}}> {user} </Player>) : <> None </>}
@@ -56,6 +54,9 @@ const PlayerWrapper = styled.div`
     flex-wrap: wrap;
     justify-content: space-around;
     font-weight: 600;
+`
+const Player = styled.div`
+    padding: 1em;
 `
 const Player = styled.div`
     padding: 1em;
