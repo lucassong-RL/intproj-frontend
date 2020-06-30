@@ -4,6 +4,7 @@ import "./App.css";
 //import Routes from './Routes';
 import Questions from './containers/Questions';
 import styled from 'styled-components';
+import Players from './components/Players';
 
 export default function App() {
   const [gameId, setId] = useState("");
@@ -18,6 +19,7 @@ export default function App() {
   const [currQuestionID, setCurrQuestionID] = useState("")
   const [gameState, setGameState] = useState("submit")
   const [admin, setAdmin] = useState(false)
+  const [players, setPlayers] = useState([])
 
   function renderStages(gameState) {
     switch(gameState) {
@@ -25,6 +27,7 @@ export default function App() {
         <>
             <h1> whats your question, {nickname} ?</h1>
             <h3> you are in room <Button id="copy" onClick={() => copyToClipboard()}> <b>{gameId} </b> </Button> </h3>
+        <Players players={players}/>
             <FormControl size="lg" type="text" id="ask" placeholder="ask a question" onChange={e => setQuestion(e.target.value)}/> 
              <Button onClick={() => handleQuestionSubmit()}> submit </Button> 
         </>
@@ -53,6 +56,8 @@ export default function App() {
         const data = JSON.parse(e.data)
         const messageType = data.type
         switch(messageType) {
+          case "newPlayer": setPlayers(data.users)
+            break;
           // returns all people that can still play
           case "pickAnswerer":  setPotentialAns(data.options) 
             break;
@@ -203,6 +208,7 @@ export default function App() {
      <LobbyWrapper>
        <h3> {nickname}, your room id is <b>{gameId}</b> <span> <Button size="sm" onClick={() => copyToClipboard()}>Copy</Button> </span> </h3>
         <p> send to ur friends! </p>
+        <Players players={players}/>
         <div>
          <Button id="startgame" onClick={()=>setGameStart(true)}> lets go </Button>
         </div> 
