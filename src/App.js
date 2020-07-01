@@ -139,6 +139,13 @@ export default function App() {
             break;
           case "roundEnd": 
               setGameEnd(false)
+              setPotentialAns([])
+              setPotentialQs([])
+              setCurrAnswerer("")
+              setCurrQuestion("")
+              setMyTurn(false)
+              setNewQs("")
+              setReadyToStart(false)
               setGameState("submit")
           default: 
         }
